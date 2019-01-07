@@ -27,12 +27,12 @@ namespace PersonalFinanceDemo
         /// <summary>
         /// Future value of investment
         /// </summary>
-        /// <param name="presentValue">Initial capital</param>
+        /// <param name="initial">Initial capital</param>
         /// <param name="rate">Effective interest rate (annual)</param>
         /// <param name="periods">Total number of periods</param>
         /// <param name="compPeriods">Number of compounding periods per year</param>
         /// <param name="payment">Amount of the constant periodic payment</param>
-        public static double FV(double presentValue, double rate, int periods, int compPeriods, double payment)
+        public static double FV(double initial, double rate, int periods, int compPeriods, double payment)
         {
             // Calculate the nominal interest rate
             double nominal = NOMINAL(rate / 100, compPeriods);
@@ -41,7 +41,7 @@ namespace PersonalFinanceDemo
             double compRate = nominal / compPeriods;
 
             // Calculate first part
-            double firstPart = presentValue * Math.Pow(1 + compRate, periods);
+            double firstPart = initial * Math.Pow(1 + compRate, periods);
 
             // Get the future value
             double result = firstPart + payment * (Math.Pow((1 + compRate), periods) - 1) / compRate;
