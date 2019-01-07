@@ -34,7 +34,7 @@ namespace PersonalFinanceDemo
         private const string _enterPeriods = "Enter the total number of periods: ";
         private const string _enterCompPeriods = "Enter the number of compounding periods per year: ";
         private const string _enterPayment = "Enter the amount of periodic payments: ";
-        private const string _enterEffectiveRate = "Enter the annual(!) effective interest rate (%): ";
+        private const string _enterEffectiveRate = "Enter the annual effective interest rate (%): ";
 
         private const int _defaultPresentValue = -20000;
         private const int _defaultCompundingPeriods = 12;

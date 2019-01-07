@@ -27,7 +27,7 @@ namespace PersonalFinanceDemo
         /// <summary>
         /// Future value of investment
         /// </summary>
-        /// <param name="presentValue">Present value (initial capital)</param>
+        /// <param name="presentValue">Initial capital</param>
         /// <param name="rate">Effective interest rate (annual)</param>
         /// <param name="periods">Total number of periods</param>
         /// <param name="compPeriods">Number of compounding periods per year</param>
@@ -38,13 +38,13 @@ namespace PersonalFinanceDemo
             double nominal = NOMINAL(rate / 100, compPeriods);
 
             // Re-calculate nominal rate with regard to the compounding periods
-            var compRate = nominal / compPeriods;
+            double compRate = nominal / compPeriods;
 
             // Calculate first part
             double firstPart = presentValue * Math.Pow(1 + compRate, periods);
 
             // Get the future value
-            var result = firstPart + payment * (Math.Pow((1 + compRate), periods) - 1) / compRate;
+            double result = firstPart + payment * (Math.Pow((1 + compRate), periods) - 1) / compRate;
 
             // Format the output
             return Math.Round(Math.Abs(result), 4);
@@ -53,7 +53,7 @@ namespace PersonalFinanceDemo
         /// <summary>
         /// Present value of investment (initial capital)
         /// </summary>
-        /// <param name="futureValue">Present value (initial capital)</param>
+        /// <param name="futureValue">Initial capital</param>
         /// <param name="rate">Effective interest rate</param>
         /// <param name="periods">Total number of periods</param>
         /// <param name="compPeriods">Number of compounding periods per year</param>
@@ -64,10 +64,10 @@ namespace PersonalFinanceDemo
             double nominal = NOMINAL(rate / 100, compPeriods);
 
             // Re-calculate nominal rate with regard to the compounding periods
-            var compRate = nominal / compPeriods;
+            double compRate = nominal / compPeriods;
 
             // Get the future value
-            var result = (futureValue - Math.Abs(payment) * (Math.Pow((1 + compRate), periods) - 1) / compRate) / Math.Pow(1 + compRate, periods);
+            double result = (futureValue - Math.Abs(payment) * (Math.Pow((1 + compRate), periods) - 1) / compRate) / Math.Pow(1 + compRate, periods);
 
             // Format the output (negative)
             return -1 * Math.Round(Math.Abs(result), 4);
@@ -76,7 +76,7 @@ namespace PersonalFinanceDemo
         /// <summary>
         /// Constant periodic payment
         /// </summary>
-        /// <param name="presentValue">Present value (initial capital)</param>
+        /// <param name="presentValue">Initial capital</param>
         /// <param name="futureValue">Future value of the investment</param>
         /// <param name="rate">Interest rate</param>
         /// <param name="periods">Total number of periods</param>
@@ -87,13 +87,13 @@ namespace PersonalFinanceDemo
             double nominal = NOMINAL(rate / 100, compPeriods);
 
             // Re-calculate nominal rate with regard to the compounding periods
-            var compRate = nominal / compPeriods;
+            double compRate = nominal / compPeriods;
 
             // Calculate first part
             double firstPart = Math.Abs(presentValue) * Math.Pow(1 + compRate, periods);
 
             // Get the periodic payments
-            var result = (futureValue - firstPart) / ((Math.Pow((1 + compRate), periods) - 1) / compRate);
+            double result = (futureValue - firstPart) / ((Math.Pow((1 + compRate), periods) - 1) / compRate);
 
             // Format the output
             return -1 * Math.Round(Math.Abs(result), 4);
@@ -102,21 +102,28 @@ namespace PersonalFinanceDemo
         /// <summary>
         /// Interest rate
         /// </summary>
-        /// <param name="presentValue">Present value (initial capital)</param>
+        /// <param name="presentValue">Initial capital</param>
         /// <param name="futureValue">Future value of the investment</param>
         /// <param name="periods">Total number of periods</param>
         /// <param name="compPeriods">Number of compounding periods per year</param>
         /// <param name="payment">Amount of the constant periodic payment</param>
         public static double INTRATE(double presentValue, double futureValue, int periods, int compPeriods, double payment)
         {
+            // Instantiate the custom algorithm
             var seeker = new InterestRateSeeker(presentValue, periods, compPeriods, payment);
+
+            // Declare the goal seek
             var goalSeeker = new TridentGoalSeek.GoalSeek(seeker);
+
+            // Seek for the expected future value
             var result = goalSeeker.SeekResult(Convert.ToDecimal(futureValue));
+
+            // Use the found input variable
             return Math.Round(Convert.ToDouble(result.InputVariable), 2);
         }
 
         /// <summary>
-        /// Used to find the Interest Rate using the Goal Seek algorythm
+        /// Used to find the Interest Rate using the Goal Seek algorithm
         /// </summary>
         class InterestRateSeeker : TridentGoalSeek.IGoalSeekAlgorithm
         {
