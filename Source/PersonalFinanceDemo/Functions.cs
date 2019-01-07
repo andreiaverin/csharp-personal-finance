@@ -43,6 +43,9 @@ namespace PersonalFinanceDemo
             // Calculate first part
             double firstPart = initial * Math.Pow(1 + compRate, periods);
 
+            // May not divide by 0
+            if (compRate == 0) return 0;
+
             // Get the future value
             double result = firstPart + payment * (Math.Pow((1 + compRate), periods) - 1) / compRate;
 
