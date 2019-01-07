@@ -102,15 +102,15 @@ namespace PersonalFinanceDemo
         /// <summary>
         /// Interest rate
         /// </summary>
-        /// <param name="presentValue">Initial capital</param>
+        /// <param name="initial">Initial capital</param>
         /// <param name="futureValue">Future value of the investment</param>
         /// <param name="periods">Total number of periods</param>
         /// <param name="compPeriods">Number of compounding periods per year</param>
         /// <param name="payment">Amount of the constant periodic payment</param>
-        public static double INTRATE(double presentValue, double futureValue, int periods, int compPeriods, double payment)
+        public static double INTRATE(double initial, double futureValue, int periods, int compPeriods, double payment)
         {
             // Instantiate the custom algorithm
-            var seeker = new InterestRateSeeker(presentValue, periods, compPeriods, payment);
+            var seeker = new InterestRateSeeker(initial, periods, compPeriods, payment);
 
             // Declare the goal seek
             var goalSeeker = new TridentGoalSeek.GoalSeek(seeker);
