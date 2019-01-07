@@ -25,11 +25,11 @@ namespace PersonalFinanceDemo
         private const string _calculatePresentValue = "4";
 
         private const string _interestRateIs = "Required interest rate is: ";
-        private const string _presentValueIs = "Required present value is: ";
+        private const string _presentValueIs = "Required initial capital is: ";
         private const string _futureValueWillBe = "Future value will be: ";
         private const string _paymentsWillBe = "Required periodic payments will be: ";
 
-        private const string _enterPresentValue = "Enter the present value of the invesment: ";
+        private const string _enterPresentValue = "Enter the initial capital: ";
         private const string _enterFutureValue = "Enter the future value of the investment: ";
         private const string _enterPeriods = "Enter the total number of periods: ";
         private const string _enterCompPeriods = "Enter the number of compounding periods per year: ";
